@@ -1,73 +1,30 @@
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# CREATE ENTRIES INTO THE TABLES
+from models import db, Puppy, Owner, Toy
 
+# Create 2 puppies
+rufus = Puppy('Rufus')
+fido = Puppy('Fido')
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+# ADD PUPPIES TO DB
+db.session.add_all([rufus, fido])
 
-app = Flask(__name__)
+# CHECK!
+print(Puppy.query.all())
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+rufus = Puppy.query.filter_by(name='Rufus').first()
+print(rufus)
 
-db = SQLAlchemy(app)
+# CREATE OWNER OBJECT
+rufus_owner = Owner('Rufus Owner\'s Name', rufus.id)
 
-Migrate(app, db)
+# CREATE TOYS
+toy1 = Toy('Chew Toy', rufus.id)
+toy2 = Toy('Ball', rufus.id)
 
+db.session.add_all([rufus_owner, toy1, toy2])
+db.session.commit()
 
-############################################
-class Puppy(db.Model):
-    # manual table name override
-    __tablename__ = 'puppies'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    age = db.Column(db.Integer)
-    breed = db.Column(db.Text)
-    # ONE TO MANY
-    # Puppy to many Toys
-    toys = db.relationship('Toy', backref='puppy', lazy='dynamic')
-    # ONE TO ONE
-    # one Puppy to one Owner
-    owner = db.relationship('Owner', backref='puppy', uselist=False)
-
-    def __init__(self, name, age, breed):
-        self.name = name
-        self.age = age
-        self.breed = breed
-
-    def __repr__(self):
-        if self.owner:
-            return f"Puppy name is {self.name} and owner is {self.owner.name}"
-        else:
-            return f"Puppy name is {self.name} and has no owner yet!"
-
-    def report_toys(self):
-        print("Here are my toys:")
-        for toy in self.toys:
-            print(toy.item_name)
-
-
-class Toy(db.Model):
-    __tablename__ = 'toys'
-
-    id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.Text)
-    puppy_id = db.Column(db.Integer, db.ForeignKey('puppies.id'))
-
-    def __init__(self, item_name, puppy_id):
-        self.item_name = item_name
-        self.puppy_id = puppy_id
-
-
-class Owner(db.Model):
-    __tablename__ = 'owners'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    puppy_id = db.Column(db.Integer, db.ForeignKey('puppies.id'))
-
-    def __init__(self, name, puppy_id):
-        self.name = name
-        self.puppy_id = puppy_id
+# GRAB RUFUS AFTER THOSE ADDITIONS
+rufus = Puppy.query.filter_by(name='Rufus').first()
+print(rufus)
+rufus.report_toys()

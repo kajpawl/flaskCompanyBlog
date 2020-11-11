@@ -27,4 +27,3 @@ class Puppy(db.Model):
 
     def __repr__(self):
         return f"Puppy {self.name} is {self.age} years old."
-    

@@ -16,6 +16,8 @@ Migrate(app, db)
 
 from myproject.puppies.views import puppies_blueprints
 from myproject.owners.views import owners_blueprints
+from myproject.user.views import user_blueprints
 
 app.register_blueprint(puppies_blueprints, url_prefix='/puppies')
 app.register_blueprint(owners_blueprints, url_prefix='/owners')
+app.register_blueprint(user_blueprints, url_prefix='/user')

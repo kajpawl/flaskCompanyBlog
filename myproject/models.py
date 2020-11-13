@@ -31,3 +31,22 @@ class Owner(db.Model):
 
     def __repr__(self):
         return f"Owner name: {self.name}, puppy id: {self.puppy_id}."
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    surname = db.Column(db.Text)
+    email = db.Column(db.Text)
+    password_hash = db.Column(db.Text)
+
+    def __init__(self, name, surname, email, password_hash):
+        self.name = name
+        self.surname = surname
+        self.email = email
+        self.password_hash = password_hash
+
+    def __repr__(self):
+        return f"{self.name} {self.surname}: {self.email}"

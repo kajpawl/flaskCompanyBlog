@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1>Update Account</h1>
+  <p>Update your user details with the form below:</p>
+  <form method="POST">
+      {{ form.hidden_tag() }}
+      {{ form.password.label }} {{ form.password() }}
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      <br>
+      {{ form.name.label }} {{ form.name() }}
+      {% if form.name.errors %}
+        {% for error in form.name.errors %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      <br>
+      {{ form.surname.label }} {{ form.surname() }}
+      {% if form.surname.errors %}
+        {% for error in form.surname.errors %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      <br>
+      {{ form.email.label }} {{ form.email() }}
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      <br>
+      {{ form.new_password.label }} {{ form.new_password() }}
+      {% if form.new_password.errors %}
+        {% for error in form.new_password.errors %}
+            <p class="error-message">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      <br>
+      {{ form.submit() }}
+  </form>
+</div>
+{% endblock %}

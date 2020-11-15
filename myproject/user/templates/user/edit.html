@@ -5,42 +5,42 @@
   <p>Update your user details with the form below:</p>
   <form method="POST">
       {{ form.hidden_tag() }}
-      {{ form.password.label }} {{ form.password() }}
+      {{ form.password.label }} {{ form.password(class_="form-control") }}
       {% if form.password.errors %}
         {% for error in form.password.errors %}
-            <p class="error-message">{{ error }}</p>
+            <p class="error-message text-danger">{{ error }}</p>
         {% endfor %}
       {% endif %}
       <br>
-      {{ form.name.label }} {{ form.name() }}
+      {{ form.name.label }} {{ form.name(class_="form-control") }}
       {% if form.name.errors %}
         {% for error in form.name.errors %}
-            <p class="error-message">{{ error }}</p>
+            <p class="error-message text-danger">{{ error }}</p>
         {% endfor %}
       {% endif %}
       <br>
-      {{ form.surname.label }} {{ form.surname() }}
+      {{ form.surname.label }} {{ form.surname(class_="form-control") }}
       {% if form.surname.errors %}
         {% for error in form.surname.errors %}
-            <p class="error-message">{{ error }}</p>
+            <p class="error-message text-danger">{{ error }}</p>
         {% endfor %}
       {% endif %}
       <br>
-      {{ form.email.label }} {{ form.email() }}
+      {{ form.email.label }} {{ form.email(class_="form-control") }}
       {% if form.email.errors %}
         {% for error in form.email.errors %}
-            <p class="error-message">{{ error }}</p>
+            <p class="error-message text-danger">{{ error }}</p>
         {% endfor %}
       {% endif %}
       <br>
-      {{ form.new_password.label }} {{ form.new_password() }}
+      {{ form.new_password.label }} {{ form.new_password(class_="form-control") }}
       {% if form.new_password.errors %}
         {% for error in form.new_password.errors %}
-            <p class="error-message">{{ error }}</p>
+            <p class="error-message text-danger">{{ error }}</p>
         {% endfor %}
       {% endif %}
       <br>
-      {{ form.submit() }}
+      {{ form.submit(class_="btn btn-primary") }}
   </form>
 </div>
 {% endblock %}

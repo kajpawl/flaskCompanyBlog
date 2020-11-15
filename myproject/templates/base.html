@@ -18,12 +18,21 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+    <div class="navbar-nav mr-auto">
+        <a class="nav-item navbar-brand" href="{{ url_for('index') }}">Home</a>
         <a class="nav-item nav-link" href="{{ url_for('puppies.add') }}">Add Pup</a>
         <a class="nav-item nav-link" href="{{ url_for('puppies.list') }}">List of Pups</a>
         <a class="nav-item nav-link" href="{{ url_for('puppies.delete') }}">Delete Pup</a>
         <a class="nav-item nav-link" href="{{ url_for('owners.add') }}">Add Owner</a>
+    </div>
+    <div class="navbar-nav ml-auto">
+        {% if current_user.is_authenticated %}
+            <a class="nav-item nav-link text-right" href="{{ url_for('user.edit') }}">Edit</a>
+            <a class="nav-item nav-link text-right" href="{{ url_for('user.logout') }}">Log Out</a>
+        {% else %}
+            <a class="nav-item nav-link text-right" href="{{ url_for('user.login') }}">Log In</a>
+            <a class="nav-item nav-link text-right" href="{{ url_for('user.register') }}">Register</a>
+        {% endif %}
     </div>
 </nav>
 

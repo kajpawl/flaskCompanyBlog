@@ -2,11 +2,13 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from myproject import db
 from myproject.models import Owner
 from myproject.owners.forms import AddForm
+from flask_login import login_required
 
 owners_blueprints = Blueprint('owners', __name__, template_folder='templates/owners')
 
 
 @owners_blueprints.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     form = AddForm()
 

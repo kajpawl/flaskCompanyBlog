@@ -33,6 +33,13 @@
             {% endfor %}
         {% endif %}
         <br>
+        {{ form.pass_confirm.label }} {{ form.pass_confirm() }}
+        {% if form.pass_confirm.errors %}
+            {% for error in form.pass_confirm.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <br>
         {{ form.submit() }}
     </form>
 </div>

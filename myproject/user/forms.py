@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, PasswordField, SubmitField, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, Length
+from myproject.models import User
 
 
 class RegisterForm(FlaskForm):
@@ -9,13 +10,23 @@ class RegisterForm(FlaskForm):
     email = StringField('Your email: ', validators=[DataRequired('Please enter your first name.'), Email()])
     password = PasswordField('Your password: ', validators=[DataRequired('Please enter your password.'),
                                                             Length(min=6, max=54,
-                                                            message='Password must have 6 to 54 characters.')])
+                                                            message='Password must have 6 to 54 characters.'),
+                                                            EqualTo('pass_confirm', message='Passwords must match.')])
+    pass_confirm = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+    def validate_email(self, email):
+        if User.query.filter_by(email=email.data).first():
+            raise ValidationError('Email has been registered')
+
+    def validate_username(self, username):
+        if User.query.filter_by(username=username.data).first():
+            raise ValidationError('Username has been registered')
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Your email: ')
-    password = PasswordField('Your password: ')
+    email = StringField('Your email: ', validators=[DataRequired('Please enter your first name.'), Email()])
+    password = PasswordField('Your password: ', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
 

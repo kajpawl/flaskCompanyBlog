@@ -2,6 +2,11 @@
 {% block content %}
 <div class="jumbotron">
   <h1>Welcome to our Adoption Page</h1>
-  <p>Please select one of the links from the nav bar.</p>
+      {% if current_user.is_authenticated %}
+          <p>Welcome to our page, {{ current_user.name | capitalize }} {{ current_user.surname | capitalize }}.</p>
+          <p>Please select one of the links from the nav bar.</p>
+      {% else %}
+          <p>Please log in or register.</p>
+      {% endif %}
 </div>
 {% endblock %}
